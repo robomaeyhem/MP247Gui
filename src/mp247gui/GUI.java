@@ -23,7 +23,7 @@ public class GUI extends JFrame {
         orderTable = new JTable();
         betTable = new JTable();
         setSize(750, 415);
-        setTitle("Mario Party 24/7 GUI");
+        setTitle("Mario Party 24/7 GUI v"+Main.VERSION);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         mainPanel = new JPanel();

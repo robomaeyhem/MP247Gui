@@ -66,13 +66,15 @@ public class ChatBot extends PircBot {
                 Type lastType = null;
                 while (message.length() >= 1) {
                     Character character = null;
-                    try {
-                        character = Character.convert(message.split("Held ", 2)[1].split(" bets:", 2)[0]);
-                    } catch (ArrayIndexOutOfBoundsException ex) {
+                    if (!message.startsWith("$")) {
                         try {
-                            character = Character.convert(message.split("Sold ", 2)[1].split(" bets:", 2)[0]);
-                        } catch (Exception ex2) {
-                            character = null;
+                            character = Character.convert(message.split("Held ", 2)[1].split(" bets:", 2)[0]);
+                        } catch (ArrayIndexOutOfBoundsException ex) {
+                            try {
+                                character = Character.convert(message.split("Sold ", 2)[1].split(" bets:", 2)[0]);
+                            } catch (Exception ex2) {
+                                character = null;
+                            }
                         }
                     }
                     if (character != null) {
