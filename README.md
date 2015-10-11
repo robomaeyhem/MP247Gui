@@ -7,4 +7,4 @@ On TwitchTV, there's a Channel made by the same person who made TwitchPlaysPokem
 
 ## Where can I download it?
 
-[Here](https://github.com/robomaeyhem/MP247Gui/blob/master/dist/MP247Gui.jar)
+[**Here**](https://github.com/robomaeyhem/MP247Gui/blob/master/dist/MP247Gui.jar)
