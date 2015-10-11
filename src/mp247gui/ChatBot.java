@@ -57,8 +57,8 @@ public class ChatBot extends PircBot {
     @Override
     public void onWhisper(String hostname, String sender, String target, String message) {
         if (sender.equalsIgnoreCase("mp247")) {
-            if (message.startsWith("you have $")) {                
-                Main.g.updateBottomPanel("<html>"+message.replace("(", "<br>(")+"</html>");
+            if (message.startsWith("you have $")) {
+                Main.g.updateBottomPanel("<html>" + message.replace("(", "<br>(") + "</html>");
             }
             if (message.startsWith("Held ") || message.startsWith("Sold ")) {
                 ArrayList<Bet> bets = new ArrayList<>();
@@ -69,11 +69,15 @@ public class ChatBot extends PircBot {
                     try {
                         character = Character.convert(message.split("Held ", 2)[1].split(" bets:", 2)[0]);
                     } catch (ArrayIndexOutOfBoundsException ex) {
-                        character = Character.convert(message.split("Sold ", 2)[1].split(" bets:", 2)[0]);
+                        try {
+                            character = Character.convert(message.split("Sold ", 2)[1].split(" bets:", 2)[0]);
+                        } catch (Exception ex2) {
+                            character = null;
+                        }
                     }
-                    if(character != null){
+                    if (character != null) {
                         lastCharacter = character;
-                    }else{
+                    } else {
                         character = lastCharacter;
                     }
                     int amount = Integer.parseInt(message.split("\\$", 2)[1].split("x", 2)[0]);
@@ -84,9 +88,9 @@ public class ChatBot extends PircBot {
                     } else if (message.startsWith("Sold")) {
                         type = Type.SELL;
                     }
-                    if(type != Type.UNKNOWN){
+                    if (type != Type.UNKNOWN) {
                         lastType = type;
-                    }else{
+                    } else {
                         type = lastType;
                     }
                     bets.add(new Bet(type, character, amount, qty));
@@ -163,11 +167,11 @@ public class ChatBot extends PircBot {
                     Main.g.addOrder(el);
                 }
             }
-            if(message.startsWith("No orders")){
+            if (message.startsWith("No orders")) {
                 Main.g.getOrdersList().clear();
                 Main.g.updateOrderTable();
             }
-            if(message.startsWith("No bets")){
+            if (message.startsWith("No bets")) {
                 Main.g.getBets().clear();
                 Main.g.updateBetTable();
             }

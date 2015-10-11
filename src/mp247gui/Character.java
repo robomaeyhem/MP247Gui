@@ -2,7 +2,7 @@ package mp247gui;
 
 public enum Character {
 
-    Mario, Peach, Wario, Yoshi;
+    Mario, Yoshi, Peach, Wario;
 
     public static Character convert(String input) {
         input = input.toLowerCase().split(" ", 2)[0];

@@ -10,14 +10,14 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 public class GUI extends JFrame {
-    
+
     public static ArrayList<Bet> bets = new ArrayList<>();
     public static ArrayList<Order> ordersList = new ArrayList<>();
     private JPanel mainPanel;
     private JTable orderTable;
     private JTable betTable;
     private JLabel panelText;
-    
+
     public GUI() {
         JPanel leftPanel = new JPanel();
         orderTable = new JTable();
@@ -75,6 +75,7 @@ public class GUI extends JFrame {
             j.setSize(500, 130);
             j.setResizable(false);
             j.setModal(true);
+            j.getRootPane().setDefaultButton(ok);
             j.setVisible(true);
         });
         JMenuItem about = new JMenuItem("About");
@@ -107,6 +108,7 @@ public class GUI extends JFrame {
             j.setModal(true);
             j.setTitle("About");
             j.setResizable(false);
+            j.getRootPane().setDefaultButton(close);
             j.setVisible(true);
         });
         file.add(about);
@@ -117,6 +119,7 @@ public class GUI extends JFrame {
         JButton bet = new JButton("Bet");
         JButton sell = new JButton("Sell");
         JButton cancel = new JButton("Cancel All");
+        JButton clear = new JButton("Clear");
         cancel.addActionListener((ActionEvent e) -> {
             Main.chat.sendMessage("#jtv", "/w mp247 cancel all");
             this.bets.clear();
@@ -143,6 +146,24 @@ public class GUI extends JFrame {
         bet.addActionListener((ActionEvent e) -> {
             if (!qty.getText().isEmpty() && !amt.getText().isEmpty()) {
                 Character selected = (Character) characterSelect.getSelectedItem();
+                try {
+                    int tempAmt = Integer.parseInt(amt.getText());
+                    if (tempAmt < 1) {
+                        throw new Exception();
+                    }
+                } catch (Exception ex) {
+                    amt.setText("");
+                    return;
+                }
+                try {
+                    int tempQty = Integer.parseInt(qty.getText());
+                    if (tempQty < 1) {
+                        throw new Exception();
+                    }
+                } catch (Exception ex) {
+                    qty.setText("");
+                    return;
+                }
                 String buyString = "/w mp247 buy " + selected + " $" + amt.getText() + " " + qty.getText();
                 Main.chat.sendMessage("#jtv", buyString);
                 Order b = new Order(buyString);
@@ -153,6 +174,24 @@ public class GUI extends JFrame {
         sell.addActionListener((ActionEvent e) -> {
             if (!qty.getText().isEmpty() && !amt.getText().isEmpty()) {
                 Character selected = (Character) characterSelect.getSelectedItem();
+                try {
+                    int tempAmt = Integer.parseInt(amt.getText());
+                    if (tempAmt < 1) {
+                        throw new Exception();
+                    }
+                } catch (Exception ex) {
+                    amt.setText("");
+                    return;
+                }
+                try {
+                    int tempQty = Integer.parseInt(qty.getText());
+                    if (tempQty < 1) {
+                        throw new Exception();
+                    }
+                } catch (Exception ex) {
+                    qty.setText("");
+                    return;
+                }
                 String buyString = "/w mp247 sell " + selected + " $" + amt.getText() + " " + qty.getText();
                 Main.chat.sendMessage("#jtv", buyString);
                 Order b = new Order(buyString);
@@ -160,11 +199,16 @@ public class GUI extends JFrame {
                 Main.chat.sendMessage("#jtv", "/w mp247 orders");
             }
         });
+        clear.addActionListener((ActionEvent e) -> {
+            qty.setText("");
+            amt.setText("");
+        });
         topLeftPanel.add(checkOrders);
         topLeftPanel.add(getBalance);
         topLeftPanel.add(cancel);
         topLeftPanel.add(bet);
         topLeftPanel.add(sell);
+        topLeftPanel.add(clear);
         midLeftPanel.add(qtyLabel);
         midLeftPanel.add(qty);
         midLeftPanel.add(amountLabel);
@@ -175,7 +219,9 @@ public class GUI extends JFrame {
         leftPanel.add(topLeftPanel);
         leftPanel.add(midLeftPanel);
         panelText = new JLabel("");
+        JLabel helpText = new JLabel("<html>If your orders or bets don't appear immediately after <br>being placed or after being completed,<br>press the \"Update Bet/Order list\" button.</html>");
         bottomLeftPanel.add(panelText);
+        bottomLeftPanel.add(helpText);
         leftPanel.add(bottomLeftPanel);
         JPanel right = new JPanel();
         right.setLayout(new GridLayout(2, 1));
@@ -188,53 +234,53 @@ public class GUI extends JFrame {
         updateBetTable();
         setVisible(true);
     }
-    
+
     public static ArrayList<Bet> getBets() {
         return bets;
     }
-    
+
     public final void addBet(Bet bet) {
         bets.add(bet);
         updateBetTable();
     }
-    
+
     public void removeBet(int id) {
         bets.remove(id);
         updateBetTable();
     }
-    
+
     public ArrayList<Order> getOrdersList() {
         return ordersList;
     }
-    
+
     public final void addOrder(Order order) {
         ordersList.add(order);
         updateOrderTable();
     }
-    
+
     public Order getOrder(int id) {
         return ordersList.get(id);
     }
-    
+
     public void clearBets() {
         bets.clear();
         updateBetTable();
     }
-    
+
     public void clearOrders() {
         ordersList.clear();
         updateOrderTable();
     }
-    
+
     public void removeOrder(int id) {
         ordersList.remove(id);
         updateOrderTable();
     }
-    
+
     public final void updateBottomPanel(String text) {
         panelText.setText(text);
     }
-    
+
     public final void updateBetTable() {
         String[] columnNames = {"Quantity", "Amount", "Character", "Type"};
         Object[][] data;
@@ -248,53 +294,53 @@ public class GUI extends JFrame {
             index++;
         }
         betTable.setModel(new TableModel() {
-            
+
             @Override
             public int getRowCount() {
                 return data.length;
             }
-            
+
             @Override
             public int getColumnCount() {
                 return columnNames.length;
             }
-            
+
             @Override
             public String getColumnName(int columnIndex) {
                 return columnNames[columnIndex];
             }
-            
+
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return String.class;
             }
-            
+
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
             }
-            
+
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 return data[rowIndex][columnIndex];
             }
-            
+
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 data[rowIndex][columnIndex] = aValue;
             }
-            
+
             @Override
             public void addTableModelListener(TableModelListener l) {
             }
-            
+
             @Override
             public void removeTableModelListener(TableModelListener l) {
             }
-            
+
         });
     }
-    
+
     public final void updateOrderTable() {
         String[] columnNames = {"ID", "Quantity", "Amount", "Character", "Type", "Cancel"};
         Object[][] data;
@@ -310,52 +356,53 @@ public class GUI extends JFrame {
             index++;
         }
         orderTable.setModel(new TableModel() {
-            
+
             @Override
             public int getRowCount() {
                 return data.length;
             }
-            
+
             @Override
             public int getColumnCount() {
                 return columnNames.length;
             }
-            
+
             @Override
             public String getColumnName(int columnIndex) {
                 return columnNames[columnIndex];
             }
-            
+
             @Override
             public Class<?> getColumnClass(int columnIndex) {
                 return String.class;
             }
-            
+
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return columnIndex == 5;
             }
-            
+
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
                 return data[rowIndex][columnIndex];
             }
-            
+
             @Override
             public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
                 data[rowIndex][columnIndex] = aValue;
             }
-            
+
             @Override
             public void addTableModelListener(TableModelListener l) {
             }
-            
+
             @Override
             public void removeTableModelListener(TableModelListener l) {
             }
-            
+
         });
         Action delete = new AbstractAction() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 JTable table = (JTable) e.getSource();
                 int modelRow = Integer.valueOf(e.getActionCommand());
@@ -364,7 +411,7 @@ public class GUI extends JFrame {
                 updateOrderTable();
             }
         };
-        
+
         ButtonColumn buttonColumn = new ButtonColumn(orderTable, delete, 5);
         buttonColumn.setMnemonic(KeyEvent.VK_D);
     }

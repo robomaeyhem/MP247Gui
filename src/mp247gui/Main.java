@@ -20,7 +20,7 @@ public class Main {
 
     public static GUI g;
     public static ChatBot chat;
-    public static String VERSION = "0.1b";
+    public static String VERSION = "0.2b";
 
     /**
      * @param args the command line arguments
@@ -104,6 +104,7 @@ public class Main {
             j.setResizable(false);
             j.setModal(true);
             j.setVisible(true);
+            j.getRootPane().setDefaultButton(ok);
             chat = new ChatBot(BOT_NAME.toString(), oAuth.toString());
             try {
                 Thread.sleep(1000);
