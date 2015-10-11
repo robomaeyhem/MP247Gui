@@ -3,6 +3,7 @@ package mp247gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.net.URI;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
@@ -75,6 +76,20 @@ public class GUI extends JFrame {
             j.setResizable(false);
             j.setModal(true);
             j.setVisible(true);
+        });
+        JMenuItem about = new JMenuItem("About");
+        about.addActionListener((ActionEvent e) -> {
+            JDialog j = new JDialog();
+            JLabel text = new JLabel("Mario Party GUI " + Main.VERSION + " made by The_Chef1337");
+            JButton button = new JButton();
+            button.setText("<HTML><FONT color=\"#000099\"><U>Check me out on Github!</U></FONT></HTML>");
+            button.addActionListener((ActionEvent ee) -> {
+                if (Desktop.isDesktopSupported()) {
+                    try {
+                        Desktop.getDesktop().browse(new URI("https://github.com/robomaeyhem/"));
+                    } catch (Exception ex) { /* TODO: error handling */ }
+                } else { /* TODO: error handling */ }
+            });
         });
         file.add(oAuthChange);
         file.add(exit);
