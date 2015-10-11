@@ -143,9 +143,9 @@ public class ChatBot extends PircBot {
                     }
                 }
             }
-            if (message.startsWith("you purchased ")) {
-
-            }
+//            if (message.startsWith("you purchased ")) {
+//
+//            }
             if (message.startsWith("your order to ") && message.contains("has been completed")) {
                 Type type = Type.convert(message.split(" to ", 2)[1].split(" ", 2)[0]);
                 Character character = Character.convert(message.split(" on ", 2)[1].split(" ", 2)[0]);
@@ -179,39 +179,8 @@ public class ChatBot extends PircBot {
         if (sender.equalsIgnoreCase("mp247")) {
             if (message.contains("has won!") && message.contains("marioparty247.tv/")) {
                 Main.g.clearOrders();
+                Main.g.clearBets();
             }
         }
     }
-
-//    @Override
-//    public void onDisconnect() {
-//        try {
-//            System.err.println("Disconnected!! Trying to reconnect...");
-//            this.reconnect();
-//        } catch (Exception ex) {
-//            System.err.println("Failed to reconnect! " + ex);
-//            System.err.println("Retrying in 10 seconds...");
-//            try {
-//                Thread.sleep(10000);
-//            } catch (Exception ex2) {
-//
-//            }
-//            onDisconnect(false);
-//        }
-//    }
-//
-//    public void onDisconnect(boolean firstTime) {
-//        try {
-//            this.reconnect();
-//        } catch (Exception ex) {
-//            System.err.println("Failed to reconnect! " + ex);
-//            System.err.println("Retrying in 10 seconds...");
-//            try {
-//                Thread.sleep(10000);
-//            } catch (Exception ex2) {
-//
-//            }
-//            onDisconnect(false);
-//        }
-//    }
 }

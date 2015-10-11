@@ -6,3 +6,6 @@ nbproject/project.xml
 lib/nblibraries.properties
 lib/CopyLibs/org-netbeans-modules-java-j2seproject-copylibstask.jar
 dist/README.TXT
+dist/META-INF/MANIFEST.MF
+dist/PircBot/
+nbproject/private/private.xml
