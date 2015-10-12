@@ -20,7 +20,7 @@ public class BonusStarsSingleTracker extends HorizontalLayer {
 		stars = new SimpleCounter("Stars");
 		ec = new SimpleCounter("Event Counter");
 		mt = new MinigameSingleTracker("Minigame earns");
-		mmt = new MaxMoneySingleTracker("Max Money");
+		mmt = new MaxMoneySingleTracker("Max $");
 		
 		this.addComp(stars);
 		this.addComp(ec);

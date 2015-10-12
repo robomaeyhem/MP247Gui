@@ -86,6 +86,7 @@ public class GUI extends JFrame {
         about.addActionListener((ActionEvent e) -> {
             JDialog j = new JDialog();
             JLabel text = new JLabel("Mario Party GUI v" + Main.VERSION + " made by The_Chef1337");
+            JLabel text2 = new JLabel("Tracker added by JOlivaC on Github.");
             JButton button = new JButton();
             button.setText("<HTML><FONT color=\"#000099\"><U>Check me out on Github!</U></FONT></HTML>");
             button.addActionListener((ActionEvent ee) -> {
@@ -98,6 +99,7 @@ public class GUI extends JFrame {
             j.setLayout(new BorderLayout());
             JPanel p = new JPanel();
             p.add(text);
+            p.add(text2);
             p.add(button);
             JPanel bottom = new JPanel();
             JButton close = new JButton("Close");
