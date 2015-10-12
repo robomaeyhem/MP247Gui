@@ -10,6 +10,7 @@ public class BonusStarsWindow extends JFrame{
 		setTitle("CHARACTER TRACK");
 		setContentPane(new BonusStarsTracker(chars));
 		pack();
+                setResizable(false);
 		setVisible(true);
 	}
 	
