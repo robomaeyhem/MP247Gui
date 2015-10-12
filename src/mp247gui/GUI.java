@@ -5,9 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.net.URI;
 import java.util.*;
+
 import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
+
+import mp247gui.BonusStars.GUI.BonusStarsWindow;
 
 public class GUI extends JFrame {
 
@@ -17,6 +20,7 @@ public class GUI extends JFrame {
     private JTable orderTable;
     private JTable betTable;
     private JLabel panelText;
+    
 
     public GUI() {
         JPanel leftPanel = new JPanel();
@@ -111,8 +115,18 @@ public class GUI extends JFrame {
             j.getRootPane().setDefaultButton(close);
             j.setVisible(true);
         });
+        
+        JMenuItem tracker = new JMenuItem("Tracker");
+        
+        tracker.addActionListener((ActionEvent e) -> {
+            new BonusStarsWindow();
+        });
+        
+        
+        
         file.add(about);
         file.add(oAuthChange);
+        file.add(tracker);
         file.add(exit);
         menuBar.add(file);
         this.setJMenuBar(menuBar);
