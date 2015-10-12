@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 public class BonusStarsWindow extends JFrame{
 
 	public BonusStarsWindow(){
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		String[] chars = {"MARIO","YOSHI","PEACH","WARIO"};
 		setTitle("CHARACTER TRACK");
 		setContentPane(new BonusStarsTracker(chars));
