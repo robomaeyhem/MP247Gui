@@ -1,5 +1,7 @@
 package mp247gui.BonusStars.GUI;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 
 import mp247gui.BonusStars.Controllers.BonusStarsController.SetElement;
@@ -7,10 +9,10 @@ import mp247gui.BonusStars.Controllers.BonusStarsController.SetElement;
 public class BonusStarsWindow extends JFrame{
 
 	BonusStarsTracker b;
-	public BonusStarsWindow(String[] chars,SetElement[] StarsListeners,SetElement[] EventListeners){
+	public BonusStarsWindow(String[] chars,SetElement[] StarsListeners,SetElement[] EventListeners, SetElement[] minigames,SetElement[] MaxListeners,ActionListener reset){
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("CHARACTER TRACK");
-		b = new BonusStarsTracker(chars,StarsListeners,EventListeners);
+		b = new BonusStarsTracker(chars,StarsListeners,EventListeners,minigames,MaxListeners,reset);
 		setContentPane(b);
 		pack();
         setResizable(false);
@@ -23,6 +25,19 @@ public class BonusStarsWindow extends JFrame{
 	
 	public void SetEvents(String charname,int events){
 		b.SetEvents(charname,events);
+	}
+	public void SetMinigames(String charname,int coins){
+		b.SetMinigames(charname, coins);
+	}
+	public void SetMaxMoney(String charname,int max){
+		b.SetMaxMoney(charname, max);
+	}
+	public void SetGuessedStars(String charname, int stars){
+		b.SetGuessedStars(charname, stars);
+	}
+	
+	public void Reset(){
+		b.Reset();
 	}
 	
 

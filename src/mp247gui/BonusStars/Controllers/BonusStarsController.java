@@ -23,7 +23,18 @@ public class BonusStarsController {
 			events[i] = new SetEvents();
 		}
 		
-		VisualTracker = new BonusStarsWindow(players,stars,events);
+		SetElement[] minigames = new SetElement[4];
+		for (int i = 0 ; i < 4; i++){
+			minigames[i] = new SetMinigames();
+		}
+		
+		SetElement[] max = new SetElement[4];
+		for (int i = 0 ; i < 4; i++){
+			max[i] = new SetMaxMoney();
+		}
+		
+		VisualTracker = new BonusStarsWindow(players,stars,events,minigames,max,new Reset());
+		UpdateGuessStars();
 	}
 	public void SetStars(String charname,int n){
 	
@@ -32,6 +43,7 @@ public class BonusStarsController {
 		int stars = board.findByName(charname).getStars();
 		board.findByName(charname).setStars(stars + n);
 		VisualTracker.SetStars(charname,board.findByName(charname).getStars());	
+		UpdateGuessStars();
 	}
 	
 	public void SetEvents(String charname,int n){
@@ -41,8 +53,52 @@ public class BonusStarsController {
 		int events = board.findByName(charname).getEventCells();
 		board.findByName(charname).setEventCells(events + n);
 		VisualTracker.SetEvents(charname,board.findByName(charname).getEventCells());
+		UpdateGuessStars();
+	}
+	public void SetMinigames(String charname,int n){
+		board.findByName(charname).setMinigameCoins(n);
+		VisualTracker.SetMinigames(charname, n);
+		UpdateGuessStars();
+	}
+	public void SetMinigamesRelative(String charname,int n){
+		int coins = board.findByName(charname).getMinigameCoins();
+		board.findByName(charname).setMinigameCoins(coins + n);
+		VisualTracker.SetMinigames(charname, coins + n);
+		UpdateGuessStars();
+	}
+	public void SetMaxMoney(String charname,int n){
+		int max = board.findByName(charname).getMaxCoins();
+		
+		if (n > max){
+			board.findByName(charname).setMaxCoins(n);
+			VisualTracker.SetMaxMoney(charname, n);
+			UpdateGuessStars();
+		}
+	}
+	public void SetMaxMoneyRelative(String charname,int n){
+		
 	}
 	
+	private void UpdateGuessStars(){
+		for (String s: players){
+			VisualTracker.SetGuessedStars(s, board.GuessStars(s));
+		}
+	}
+	
+	public void Reset(){
+		board = new Game(players);
+		VisualTracker.Reset();
+		UpdateGuessStars();
+	}
+	
+	private class Reset implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			Reset();
+		}
+		
+	}
 	
 	
 	public abstract class SetElement{
@@ -92,6 +148,34 @@ public class BonusStarsController {
 		@Override
 		protected void SetElementRelative() {
 			SetEventsRelative(charName,number);	
+		}
+		
+	}
+	
+	public class SetMinigames extends SetElement{
+
+		@Override
+		protected void SetElementValue() {
+			SetMinigames(charName,number);
+		}
+
+		@Override
+		protected void SetElementRelative() {
+			SetMinigamesRelative(charName,number);
+		}
+		
+	}
+	
+	public class SetMaxMoney extends SetElement{
+
+		@Override
+		protected void SetElementValue() {
+			SetMaxMoney(charName,number);
+		}
+
+		@Override
+		protected void SetElementRelative() {
+			SetMaxMoneyRelative(charName,number);
 		}
 		
 	}

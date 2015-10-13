@@ -14,10 +14,11 @@ public class BonusStarsSingleTracker extends HorizontalLayer {
 	private SimpleCounter stars;
 	private MinigameSingleTracker mt;
 	private MaxMoneySingleTracker mmt;
+	private NumericDisplay guessedStars;
 	
 	private String CharName;
 	
-	public BonusStarsSingleTracker(String charname,SetElement starsListener,SetElement eventListener){
+	public BonusStarsSingleTracker(String charname,SetElement starsListener,SetElement eventListener, SetElement minigamesListener,SetElement MaxListener){
 		CharName = charname;
 		this.setBorder(BorderFactory.createTitledBorder(charname));
 		
@@ -27,13 +28,19 @@ public class BonusStarsSingleTracker extends HorizontalLayer {
 		eventListener.setName(charname);
 		ec = new SimpleCounter(eventListener,"Event Counter");
 		
-		mt = new MinigameSingleTracker("Minigame earns");
-		mmt = new MaxMoneySingleTracker("Max $");
+		minigamesListener.setName(charname);
+		mt = new MinigameSingleTracker(minigamesListener,"Minigame earns");
+		
+		MaxListener.setName(charname);
+		mmt = new MaxMoneySingleTracker(MaxListener,"Max $");
+		
+		guessedStars = new NumericDisplay("Final Stars");
 		
 		this.addComp(stars);
 		this.addComp(ec);
 		this.addComp(mt);
 		this.addComp(mmt);
+		this.addComp(guessedStars);
 	}
 	
 	public void Reset(){
@@ -53,6 +60,15 @@ public class BonusStarsSingleTracker extends HorizontalLayer {
 	
 	public void SetEvents(int events){
 		this.ec.SetCount(events);
+	}
+	public void SetMinigames(int coins){
+		this.mt.SetMoney(coins);
+	}
+	public void SetMaxMoney(int coints){
+		this.mmt.SetMoney(coints);
+	}
+	public void SetGuessedStars(int stars){
+		this.guessedStars.SetNumber(stars);
 	}
 	
 	

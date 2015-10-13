@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import mp247gui.BonusStars.Controllers.BonusStarsController.SetElement;
 import mp247gui.BonusStars.GUI.Utils.HorizontalLayer;
 import mp247gui.BonusStars.GUI.Utils.VerticalLayer;
 
@@ -27,20 +28,27 @@ public class MaxMoneySingleTracker extends JPanel {
 	
 	private Stack<Integer> undoStack;
 	
+	private SetElement listener;
+	
 	public  MaxMoneySingleTracker(){
 		Init();
 	}
-	public  MaxMoneySingleTracker(String title){
+	public  MaxMoneySingleTracker(SetElement listener,String title){
+		this.listener = listener;
 		Init();
 		this.setBorder(BorderFactory.createTitledBorder(title));
 	}
 	
+	public void SetMoney(int money){
+		this.money = money;
+		DisplayCount();
+	}
+	
 	public void Apply(int n){
 		if (n > money){
-			undoStack.push(n);
-			money = n;
-			DisplayCount();
-			
+			listener.setRelative(false);
+			listener.setNumber(n);
+			listener.Set();
 		}	
 		next.setText("");
 	}
@@ -95,7 +103,7 @@ public class MaxMoneySingleTracker extends JPanel {
 		h.addComp(DisplayMoney);
 		h.addComp(next);
 		//h.addComp(apply);
-		h.addComp(undo);
+		//h.addComp(undo);
 		
 		
 		this.setLayout(new GridBagLayout());
