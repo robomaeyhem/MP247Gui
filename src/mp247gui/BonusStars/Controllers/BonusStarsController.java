@@ -7,7 +7,7 @@ import mp247gui.BonusStars.GUI.BonusStarsWindow;
 import mp247gui.Model.Game;
 
 public class BonusStarsController {
-	private String[] players = {"Mario","Peach","Luigi","Bowser"};
+	private String[] players = {"Mario","Yoshi","Peach","Wario"};
 	private Game board;
 	private BonusStarsWindow VisualTracker;
 	
