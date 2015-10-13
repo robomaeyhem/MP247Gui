@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import mp247gui.BonusStars.Controllers.BonusStarsController;
 import mp247gui.BonusStars.GUI.BonusStarsWindow;
 
 public class GUI extends JFrame {
@@ -121,7 +122,7 @@ public class GUI extends JFrame {
         JMenuItem tracker = new JMenuItem("Tracker");
         
         tracker.addActionListener((ActionEvent e) -> {
-            new BonusStarsWindow();
+           BonusStarsController c = new BonusStarsController();
         });
         
         

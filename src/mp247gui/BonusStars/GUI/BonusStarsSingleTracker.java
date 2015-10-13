@@ -4,6 +4,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
 
+import mp247gui.BonusStars.Controllers.BonusStarsController.SetElement;
 import mp247gui.BonusStars.GUI.Utils.HorizontalLayer;
 import mp247gui.BonusStars.GUI.Utils.VerticalLayer;
 
@@ -14,11 +15,18 @@ public class BonusStarsSingleTracker extends HorizontalLayer {
 	private MinigameSingleTracker mt;
 	private MaxMoneySingleTracker mmt;
 	
-	public BonusStarsSingleTracker(String charname){
+	private String CharName;
+	
+	public BonusStarsSingleTracker(String charname,SetElement starsListener,SetElement eventListener){
+		CharName = charname;
 		this.setBorder(BorderFactory.createTitledBorder(charname));
 		
-		stars = new SimpleCounter("Stars");
-		ec = new SimpleCounter("Event Counter");
+		starsListener.setName(charname);
+		stars = new SimpleCounter(starsListener,"Stars");
+		
+		eventListener.setName(charname);
+		ec = new SimpleCounter(eventListener,"Event Counter");
+		
 		mt = new MinigameSingleTracker("Minigame earns");
 		mmt = new MaxMoneySingleTracker("Max $");
 		
@@ -35,13 +43,18 @@ public class BonusStarsSingleTracker extends HorizontalLayer {
 		mmt.Reset();
 	}
 	
-	public static void main(String argv[]){
-		JFrame main = new JFrame();
-		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		main.setContentPane(new BonusStarsSingleTracker("mario"));
-		main.pack();
-		main.setVisible(true);
-		
-		
+	public String getCharName(){
+		return CharName;
 	}
+	
+	public void SetStars(int stars){
+		this.stars.SetCount(stars);
+	}
+	
+	public void SetEvents(int events){
+		this.ec.SetCount(events);
+	}
+	
+	
+
 }

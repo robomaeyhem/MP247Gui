@@ -2,19 +2,28 @@ package mp247gui.BonusStars.GUI;
 
 import javax.swing.JFrame;
 
+import mp247gui.BonusStars.Controllers.BonusStarsController.SetElement;
+
 public class BonusStarsWindow extends JFrame{
 
-	public BonusStarsWindow(){
+	BonusStarsTracker b;
+	public BonusStarsWindow(String[] chars,SetElement[] StarsListeners,SetElement[] EventListeners){
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		String[] chars = {"MARIO","YOSHI","PEACH","WARIO"};
 		setTitle("CHARACTER TRACK");
-		setContentPane(new BonusStarsTracker(chars));
+		b = new BonusStarsTracker(chars,StarsListeners,EventListeners);
+		setContentPane(b);
 		pack();
-                setResizable(false);
+        setResizable(false);
 		setVisible(true);
 	}
 	
-	public static void main(String[] argv){
-		new BonusStarsWindow();
+	public void SetStars(String charname,int stars){
+		b.SetStars(charname, stars);
 	}
+	
+	public void SetEvents(String charname,int events){
+		b.SetEvents(charname,events);
+	}
+	
+
 }

@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import mp247gui.BonusStars.Controllers.BonusStarsController.SetElement;
 import mp247gui.BonusStars.GUI.Utils.HorizontalLayer;
 import mp247gui.BonusStars.GUI.Utils.VerticalLayer;
 
@@ -26,20 +27,18 @@ public class SimpleCounter extends JPanel {
 	private JButton plus;
 	private JButton minus;
 	
-	public SimpleCounter(){
-		Init();
-	}
-	public SimpleCounter(String title){
+	private SetElement listener;
+	
+	public SimpleCounter(SetElement listener,String title){
 		Init();
 		this.setBorder(BorderFactory.createTitledBorder(title));
+		this.listener = listener;
+		listener.setRelative(true);
+
 	}
 	
-	public void Plus(){
-		count ++;
-		DisplayCount();
-	}
-	public void Minus(){
-		count --;
+	public void SetCount(int c){
+		count = c;
 		DisplayCount();
 	}
 	
@@ -47,6 +46,17 @@ public class SimpleCounter extends JPanel {
 		count = 0;
 		DisplayCount();
 	}
+	
+	private void Plus(){
+		listener.setNumber(1);
+		listener.Set();
+	}
+	private void Minus(){
+		listener.setNumber(-1);
+		listener.Set();
+	}
+	
+	
 	private void Init(){
 		count = 0;
 		InitComponents();
@@ -95,13 +105,6 @@ public class SimpleCounter extends JPanel {
 		
 	}
 	
-	public static void main(String argv[]){
-		JFrame main = new JFrame();
-		main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		main.setContentPane(new SimpleCounter());
-		main.setSize(100, 100);
-		main.setVisible(true);
-		
-	}
+
 	
 }
