@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import mp247gui.BonusStars.Controllers.BonusStarsController.SetElement;
 import mp247gui.BonusStars.GUI.Utils.HorizontalLayer;
 import mp247gui.BonusStars.GUI.Utils.VerticalLayer;
 
@@ -29,25 +30,34 @@ public class MinigameSingleTracker extends JPanel {
 	
 	private Stack<Integer> undoStack;
 	
+	private SetElement observer;
+	
 	public MinigameSingleTracker(){
 		Init();
 	}
-	public MinigameSingleTracker(String title){
+	public MinigameSingleTracker(SetElement listener,String title){
+		observer = listener;
 		Init();
 		this.setBorder(BorderFactory.createTitledBorder(title));
 	}
+	public void SetMoney(int money){
+		undoStack.push(this.money);
+		this.money = money;
+		DisplayCount();
+	}
 	
 	public void Add(int n){
-		undoStack.push(n);
-		money += n;
-		DisplayCount();
+		observer.setRelative(true);
+		observer.setNumber(n);
+		observer.Set();
 	}
 	
 	public void Undo(){
 		if (!undoStack.empty()){
 			int n = undoStack.pop();
-			money -= n;
-			DisplayCount();
+			observer.setRelative(false);
+			observer.setNumber(n);
+			observer.Set();
 		}
 	}
 	
@@ -57,14 +67,16 @@ public class MinigameSingleTracker extends JPanel {
 	}
 	
 	public void Reset(){
+		undoStack = new Stack<>();
 		money = 0;
 		DisplayCount();
 	}
 	private void Init(){
-		money = 0;
 		InitComponents();
-		DisplayCount();
 		undoStack = new Stack<>();
+		money = 0;
+		DisplayCount();
+		
 	}
 	
 	private void InitComponents(){
@@ -90,7 +102,7 @@ public class MinigameSingleTracker extends JPanel {
 		VerticalLayer h2 = new VerticalLayer();
 		h2.addComp(add10);
 		//h2.addComp(addX);
-		h2.addComp(undo);
+		//h2.addComp(undo);
 		
 		HorizontalLayer l = new HorizontalLayer();
 		l.addComp(h1);
