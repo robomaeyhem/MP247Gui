@@ -9,10 +9,10 @@ import mp247gui.BonusStars.Controllers.BonusStarsController.SetElement;
 public class BonusStarsWindow extends JFrame{
 
 	BonusStarsTracker b;
-	public BonusStarsWindow(String[] chars,SetElement[] StarsListeners,SetElement[] EventListeners, SetElement[] minigames,SetElement[] MaxListeners,ActionListener reset){
+	public BonusStarsWindow(String[] chars,SetElement[] StarsListeners,SetElement[] EventListeners, SetElement[] minigames,SetElement[] MaxListeners,ActionListener reset,ActionListener undo){
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("CHARACTER TRACK");
-		b = new BonusStarsTracker(chars,StarsListeners,EventListeners,minigames,MaxListeners,reset);
+		b = new BonusStarsTracker(chars,StarsListeners,EventListeners,minigames,MaxListeners,reset,undo);
 		setContentPane(b);
 		pack();
         setResizable(false);

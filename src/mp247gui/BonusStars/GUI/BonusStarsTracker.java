@@ -15,11 +15,11 @@ import mp247gui.BonusStars.GUI.Utils.VerticalLayer;
 public class BonusStarsTracker extends VerticalLayer{
 	private BonusStarsSingleTracker[] trackers;
 	
-	public BonusStarsTracker(String[] chars,SetElement[] StarsListeners,SetElement[] EventListeners, SetElement[] MinigamesListener,SetElement[] MaxListeners,ActionListener reset){
-		InitComponents(chars,StarsListeners,EventListeners,MinigamesListener,MaxListeners,reset);
+	public BonusStarsTracker(String[] chars,SetElement[] StarsListeners,SetElement[] EventListeners, SetElement[] MinigamesListener,SetElement[] MaxListeners,ActionListener reset,ActionListener undo){
+		InitComponents(chars,StarsListeners,EventListeners,MinigamesListener,MaxListeners,reset,undo);
 	}
 	
-	private void InitComponents(String[] chars,SetElement[] StarsListeners,SetElement[] EventListeners, SetElement[] MinigamesListener,SetElement[] MaxListeners,ActionListener reset){
+	private void InitComponents(String[] chars,SetElement[] StarsListeners,SetElement[] EventListeners, SetElement[] MinigamesListener,SetElement[] MaxListeners,ActionListener reset,ActionListener undo){
 		trackers = new BonusStarsSingleTracker[chars.length];
 		
 		for (int i = 0; i < chars.length; i ++){
@@ -27,11 +27,16 @@ public class BonusStarsTracker extends VerticalLayer{
 			this.addComp(trackers[i]);
 		}
 		
-		JPanel Preset = new JPanel(new FlowLayout());
+		JPanel Bottom = new JPanel(new FlowLayout());
 		JButton res = new JButton("Reset");
 		res.addActionListener(reset);
-		Preset.add(res);
-		this.addComp(Preset);
+		
+		JButton und = new JButton("Undo");
+		und.addActionListener(undo);
+		
+		Bottom.add(res);
+		Bottom.add(und);
+		this.addComp(Bottom);
 		
 
 		this.setVisible(true);
