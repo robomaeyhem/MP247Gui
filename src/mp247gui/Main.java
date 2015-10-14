@@ -20,7 +20,7 @@ public class Main {
 
     public static GUI g;
     public static ChatBot chat;
-    public static String VERSION = "0.3b";
+    public static String VERSION = "0.4b";
 
     /**
      * @param args the command line arguments
