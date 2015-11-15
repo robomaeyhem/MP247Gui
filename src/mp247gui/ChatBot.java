@@ -55,8 +55,8 @@ public class ChatBot extends PircBot {
     }
 
     @Override
-    public void onWhisper(String hostname, String sender, String target, String message) {
-        if (sender.equalsIgnoreCase("mp247")) {
+    public void onWhisper(User sender, String target, String message) {
+        if (sender.getNick().equalsIgnoreCase("mp247")) {
             if (message.startsWith("you have $")) {
                 Main.g.updateBottomPanel("<html>" + message.replace("(", "<br>(") + "</html>");
             }
@@ -181,8 +181,8 @@ public class ChatBot extends PircBot {
     }
 
     @Override
-    public void onMessage(String channel, String sender, String login, String hostname, String message) {
-        if (sender.equalsIgnoreCase("mp247")) {
+    public void onMessage(String channel, User sender, String message) {
+        if (sender.getNick().equalsIgnoreCase("mp247")) {
             if (message.contains("has won!") && message.contains("marioparty247.tv/")) {
                 Main.g.clearOrders();
                 Main.g.clearBets();
